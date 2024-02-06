@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.programmingtechie.productservice.dto.ProductCreate;
+import com.programmingtechie.productservice.dto.ProductCreateRequest;
+import com.programmingtechie.productservice.dto.ProductCreateResponse;
 import com.programmingtechie.productservice.dto.ProductList;
 import com.programmingtechie.productservice.dto.ProductListResponse;
-import com.programmingtechie.productservice.dto.ProductRequest;
 import com.programmingtechie.productservice.model.Product;
 import com.programmingtechie.productservice.repository.ProductRepository;
 import com.programmingtechie.productservice.service.ProductService;
@@ -22,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository; 
     
 	@Override
-    public void createProduct(ProductRequest productRequest){
+    public ProductCreateResponse createProduct(ProductCreateRequest productRequest){
 
         // Create a new instance of the product object using the Builder pattern
         Product product = Product.builder()
@@ -36,6 +38,17 @@ public class ProductServiceImpl implements ProductService {
 
         // Log a message indicating that the product is saved
         log.info("Product {} is saved", product.getId());
+        
+        ProductCreate productCreated = ProductCreate.builder()
+        	.id(product.getId())
+        	.build();
+        
+        ProductCreateResponse response = new ProductCreateResponse();
+        response.setMessageCode("2000");
+        response.setMessage("Product created successfully.");
+        response.setContent(productCreated);
+        
+        return response;
     }
 
 	@Override
