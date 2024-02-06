@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.programmingtechie.productservice.dto.ProductList;
+import com.programmingtechie.productservice.dto.ProductListResponse;
 import com.programmingtechie.productservice.dto.ProductRequest;
-import com.programmingtechie.productservice.dto.ProductResponse;
 import com.programmingtechie.productservice.model.Product;
 import com.programmingtechie.productservice.repository.ProductRepository;
 import com.programmingtechie.productservice.service.ProductService;
@@ -38,14 +39,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
 	@Override
-    public List<ProductResponse> getAllProducts(){
+    public ProductListResponse getAllProducts(){
 
         // Retrieve a list of all products from the repository
         List<Product> products = productRepository.findAll();
 
         // Map each Product entity to a ProductResponse and collect the results into a List
-        return products.stream().map(this::mapToProductResponse).toList();
-
+        List<ProductList> productsList = products.stream().map(this::mapToProductResponse).toList();
+        
+        ProductListResponse response = new ProductListResponse();
+        response.setMessageCode("2000");
+        response.setMessage("Products list fetched successfully.");
+        response.setContent(productsList);
+        
+        return response;
     }
 
     /**
@@ -53,10 +60,10 @@ public class ProductServiceImpl implements ProductService {
      * @param product
      * @return
      */
-    private ProductResponse mapToProductResponse(Product product){
+    private ProductList mapToProductResponse(Product product){
 
         // Create and return a ProductResponse using the Builder pattern
-        return ProductResponse.builder()
+        return ProductList.builder()
             .id(product.getId())
             .name(product.getName())
             .description(product.getDescription())

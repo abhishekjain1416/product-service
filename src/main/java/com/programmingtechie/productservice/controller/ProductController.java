@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.programmingtechie.productservice.dto.ProductListResponse;
 import com.programmingtechie.productservice.dto.ProductRequest;
-import com.programmingtechie.productservice.dto.ProductResponse;
 import com.programmingtechie.productservice.service.ProductService;
 
 @RestController
@@ -30,7 +30,7 @@ public class ProductController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ProductResponse> getAllProducts(){
+    public ProductListResponse getAllProducts(){
         return productService.getAllProducts();
     }
 }
