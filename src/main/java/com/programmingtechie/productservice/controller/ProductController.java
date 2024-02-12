@@ -1,5 +1,6 @@
 package com.programmingtechie.productservice.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +24,9 @@ public class ProductController {
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductCreateResponse createProduct(@RequestBody ProductCreateRequest request){
+    public ProductCreateResponse createProduct(@Valid @RequestBody ProductCreateRequest request){
 
-    	ProductCreateResponse response = productService.createProduct(request);
+        ProductCreateResponse response = productService.createProduct(request);
     	return response;
     }
 
