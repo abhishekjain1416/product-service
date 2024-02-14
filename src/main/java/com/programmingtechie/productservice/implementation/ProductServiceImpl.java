@@ -2,6 +2,7 @@ package com.programmingtechie.productservice.implementation;
 
 import java.util.List;
 
+import com.programmingtechie.productservice.enums.ProductEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,8 +45,8 @@ public class ProductServiceImpl implements ProductService {
         	.build();
         
         ProductCreateResponse response = new ProductCreateResponse();
-        response.setMessageCode("2000");
-        response.setMessage("Product created successfully.");
+        response.setMessageCode(ProductEnum.PRODUCT_CREATED_SUCCESSFULLY.getSuccessCode());
+        response.setMessage(ProductEnum.PRODUCT_CREATED_SUCCESSFULLY.getMessage());
         response.setContent(productCreated);
         
         return response;
@@ -61,8 +62,8 @@ public class ProductServiceImpl implements ProductService {
         List<ProductList> productsList = products.stream().map(this::mapToProductResponse).toList();
         
         ProductListResponse response = new ProductListResponse();
-        response.setMessageCode("2000");
-        response.setMessage("Products list fetched successfully.");
+        response.setMessageCode(ProductEnum.PRODUCTS_FETCHED_SUCCESSFULLY.getSuccessCode());
+        response.setMessage(ProductEnum.PRODUCTS_FETCHED_SUCCESSFULLY.getMessage());
         response.setContent(productsList);
         
         return response;
